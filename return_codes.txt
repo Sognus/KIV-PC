@@ -1,0 +1,4 @@
+ 0 (000): Aplikace se v poradku ukoncila
+-1 (255): Kontext aplikace je NULL
+-2 (254): Nedostatecny pocet vstupnich argumentu
+-3 (253): Ciselne hodnoty pro nastaveni stemmeru nejsou validni
