@@ -2,3 +2,5 @@
 -1 (255): Kontext aplikace je NULL
 -2 (254): Nedostatecny pocet vstupnich argumentu
 -3 (253): Ciselne hodnoty pro nastaveni stemmeru nejsou validni
+-4 (252): Nelze urcit pozadovanou operaci
+-5 (251): Nebylo mozne otevrit soubor s textem

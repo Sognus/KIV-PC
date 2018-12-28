@@ -55,4 +55,7 @@ int string_starts_with(const char *prefix, const char *string);
 */
 int strtol_error_detect(char *nptr, char **endptr, long number);
 
+/* Uvolni pamet alokovanou pro strukturu app_context */
+void free_app_context(app_context *context);
+
 #endif //KIV_PC_CONTEXT_H

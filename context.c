@@ -198,3 +198,13 @@ void print_app_context(app_context *context)
     printf("ERROR CODE: %d\n", context->error_code);
     printf("</APP_CONTEXT>\n");
 }
+
+/* Uvolni pamet alokovanou pro strukturu app_context */
+void free_app_context(app_context *context)
+{
+    if(context != NULL)
+    {
+        free(context->input_text);
+        free(context);
+    }
+}
