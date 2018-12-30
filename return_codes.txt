@@ -4,3 +4,4 @@
 -3 (253): Ciselne hodnoty pro nastaveni stemmeru nejsou validni
 -4 (252): Nelze urcit pozadovanou operaci
 -5 (251): Nebylo mozne otevrit soubor s textem
+-6 (250): Nelze alokovat pamet

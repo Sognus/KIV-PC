@@ -9,17 +9,15 @@
 /* Uzivatelske knihovny a soucasti */
 #include "config.h"
 #include "context.h"
-#include "string_helper.h"
+#include "trie.h"
+
+/* Ostatni casti aplikace */
+#include "learning_mode.h"
 
 
 /* Vstupni bod aplikace */
 int main(int argc, char *argv[]);
 
-/* Spusti cast aplikace v rezimu uceni
- *
- * Vraci 0 pokud nenastane chyba, jine cislo pri chybe
- */
-int learning_mode(app_context *context);
 
 /* Spusti cast aplikace v rezimu zpracovani
  *
