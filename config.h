@@ -5,6 +5,6 @@
 #define DEEP_DEBUG 0
 
 /* Zapina ci vypina nektere zakladni debug zpravy */
-#define DEBUG 1
+#define DEBUG 0
 
 #endif //KIV_PC_CONFIG_H

@@ -10,6 +10,7 @@
 #include "config.h"
 #include "context.h"
 #include "trie.h"
+#include "linked_list.h"
 
 /* Ostatni casti aplikace */
 #include "learning_mode.h"

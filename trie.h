@@ -9,6 +9,7 @@
 #include "config.h"
 #include "lcs.h"
 #include "string_helper.h"
+#include "linked_list.h"
 
 /* Pocet symbolu, ktere ukladame do abecedy (8bit - 0 az 255) */
 #define ALPHABET_SIZE 256
@@ -27,7 +28,7 @@ typedef struct trie_node
 } trie_node;
 
 /* Vytvori novy prvek  */
-trie_node *create_trie_node(void);
+trie_node *create_trie_node();
 
 /* Vlozi retezec do trie v pripade ze neexistuje
  *
@@ -52,9 +53,13 @@ void trie_print_node(trie_node *node);
 /* Rekurzivne uvolni pamet struktury trie  */
 void trie_free(trie_node *root);
 
+/* DEPRECATED: Pomocna funkce pro trie_manipulate  */
 void trie_manipulate_second(trie_node *save_root,trie_node *root, char *current_word, char *str, int level);
 
-/* Funkce, ktera vypise obsah trie */
+/* DEPRECATED: Funkce, ktera vypise obsah trie */
 void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *current_node, char *str, int level, int longest_word);
+
+/* Funkce, ktera vypise obsah trie do spojoveho seznamu */
+void trie_to_list(list_node *list_root,trie_node *root, char *str, int level);
 
 #endif //KIV_PC_TRIE_H

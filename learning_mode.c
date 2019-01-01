@@ -37,7 +37,7 @@ int learning_mode(app_context *context)
     }
 
     /* Alokace pameti pro buffer */
-    buffer = calloc((size_t )(buffer_size+1), sizeof(char));
+    buffer = calloc((size_t )(buffer_size)+1, sizeof(char));
 
     /* Overeni alokace */
     if(buffer == NULL)
@@ -91,7 +91,7 @@ int learning_mode(app_context *context)
 
             /* Slovo pokracuje, pridame znak do bufferu */
             /* TODO CP1250_tolower */
-            buffer[buffer_used] = current_char;
+            buffer[buffer_used] = cp1250_tolower(current_char);
             buffer_used++;
 
             /* Zjisteni nejdelsiho prectenoho slova */
@@ -114,29 +114,61 @@ int learning_mode(app_context *context)
         }
     }
 
-    /* Provedeni LCS na prectenych slovech */
+    /* Ulozeni nalezenych slov do listu pro rychlejsi iteraci */
 
-    /* Vytvoreni TRIE pro ulozeni vysledku - kvuli iteraci skrz starou trii */
-    trie_node *save = create_trie_node();
-
+    /* Vytvoreni korenoveho prvku spojoveho seznamu */
+    list_node *list_root_node = create_list_node("", 0);
+    /* Deklarace promennych pro presun klicu do spojoveho seznamu */
     int level = 0;
-    char *str_buffer = calloc((size_t)(longest_word)+1, sizeof(char));
-    trie_manipulate_first(save,root,root, str_buffer, level, longest_word);
-    free(str_buffer);
+    char *str = malloc(sizeof(char) * longest_word + 1);
+    /* Presun dat z trie do spojoveho seznamu */
+    trie_to_list(list_root_node, root, str, level);
+    free(str);
+
+    /* Deklarace nove trie */
+    trie_node *save_root = create_trie_node();
+    /* Deklarace iteracnich promennych */
+    list_node *iter1 = list_root_node;
+    list_node *iter2 = NULL;
+    char *buf = calloc((size_t)(longest_word) + 1, sizeof(char));
+    
+    while(iter1)
+    {
+        iter2 = iter1->next;
+        while(iter2)
+        {
+            longest_common_substring(iter1->content, iter2->content, &buf);
+            if(strlen(buf) > 0) {
+                trie_insert(save_root, buf);
+            }
+            iter2 = iter2->next;
+        }
+        iter1 = iter1->next;
+    }
+
+    char *buff2 = calloc((size_t)(longest_word) + 1, sizeof(char));
+    int lvl = 0;
+    trie_display(save_root, buff2, lvl);
+
+
+    free_list(list_root_node);
+    free(buf);
+    free(buff2);
+
 
     /* */
     if(DEBUG)
     {
         int level = 0;
         char *str = malloc(sizeof(char) * longest_word + 1);
-        trie_display(save, str, level);
+        //trie_display(save, str, level);
         free(str);
     }
 
     /* Uvolneni pameti */
     free(buffer);
     trie_free(root);
-    trie_free(save);
+    //trie_free(save);
 
     /* Uzavreni souboru */
     fclose(file);

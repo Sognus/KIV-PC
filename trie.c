@@ -3,7 +3,7 @@
 
 
 /* Vytvori novy prvek  */
-trie_node *create_trie_node(void)
+trie_node *create_trie_node()
 {
     /* Deklarace ukazatele na node */
     trie_node *node = NULL;
@@ -224,7 +224,7 @@ void trie_display(trie_node *root, char *str, int level)
     }
 }
 
-/* Funkce, ktera vypise obsah trie */
+/* DEPRECATED: Funkce, ktera vypise obsah trie */
 void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *current_node, char *str, int level, int longest_word)
 {
     /* Deklarace */
@@ -272,7 +272,7 @@ void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *cur
     }
 }
 
-/* Funkce, ktera vypise obsah trie */
+/* DEPRECATED: Pomocna funkce pro trie_manipulate  */
 void trie_manipulate_second(trie_node *save_root ,trie_node *root, char *current_word, char *str, int level)
 {
     /* Deklarace */
@@ -331,6 +331,50 @@ void trie_manipulate_second(trie_node *save_root ,trie_node *root, char *current
         {
             str[level] = i;
             trie_manipulate_second(save_root,root->children[i], current_word, str, level + 1);
+        }
+    }
+}
+
+/* Funkce, ktera vypise obsah trie do spojoveho seznamu */
+void trie_to_list(list_node *list_root,trie_node *root, char *str, int level)
+{
+    /* Deklarace */
+    int i;
+
+    /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
+    if(root == NULL)
+    {
+        /* Technicky retezec neni, ale spise se jedna o jinou chybu */
+        printf("NELZE VYPSAT OBSAH TRIE, ROOT JE NULL\n");
+        return;
+    }
+
+    /* Overeni na vstup - pokud je retezec key NULL, neudelej nic */
+    if(str == NULL)
+    {
+        /* Nemuzeme hledat NULL */
+        if(DEEP_DEBUG)
+        {
+            printf("NELZE VYPSAT OBSAH TRIE, BUFFER JE NULL\n");
+        }
+        return;
+    }
+
+
+    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
+    if (trie_is_leaf_node(root))
+    {
+        str[level] = '\0';
+        insert_list_string(list_root, str, root->count);
+    }
+
+    for (i = 0; i < ALPHABET_SIZE; i++)
+    {
+        /* Pokud nalezneme nenuloveho potomka, zavolame rekurzivne funkci tree_display */
+        if (root->children[i] != NULL)
+        {
+            str[level] = i;
+            trie_to_list(list_root,root->children[i], str, level + 1);
         }
     }
 }

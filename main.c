@@ -14,33 +14,6 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    /*
-    trie_node *trie = create_trie_node();
-    char *str1 = "test";
-    char *str2 = "test2";
-    char *str3 = "test3";
-    char *str4 = "vrku";
-
-    trie_insert(trie, str1);
-    trie_insert(trie, str2);
-    trie_insert(trie, str3);
-    trie_insert(trie, str4);
-
-    trie_node *save = create_trie_node();
-
-    int longest_word = 6;
-    int level = 0;
-    char *str_buffer = calloc((size_t)(longest_word)+1, sizeof(char));
-    trie_manipulate_first(save,trie,trie, str_buffer, level, longest_word);
-    free(str_buffer);
-
-    int lvl = 0;
-    char *str_buffer_2 = calloc((size_t)(longest_word)+1, sizeof(char));
-    trie_display(save, str_buffer_2, lvl );
-
-    exit(55);
-     */
-
     /* Vytvoreni aplikacniho kontextu */
     context = create_app_context(argc, argv);
 

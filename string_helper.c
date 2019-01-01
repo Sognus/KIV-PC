@@ -62,3 +62,25 @@ long long_max(long a, long b)
     /* ternarni operator pokud je a vetsi nez b vrat a, jinak vrat b */
     return ((a) >= (b) ? (a) : (b));
 }
+
+/* Prevede znak z velkeho pismene na male */
+unsigned char cp1250_tolower(unsigned char c)
+{
+    /* Pro hodnoty v rozsahu ASCII pouzijeme ASCII tolower */
+    if(c <= 127)
+    {
+        return tolower(c);
+    }
+
+    if(c >= 138 && c <= 143)
+    {
+        return c+16;
+    }
+
+    if(c >= 192 && c <= 222)
+    {
+        return c+32;
+    }
+
+    return c;
+}
