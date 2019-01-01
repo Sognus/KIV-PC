@@ -9,8 +9,10 @@
 #include "config.h"
 #include "context.h"
 #include "trie.h"
+#include "string_helper.h"
+#include "lcs.h"
 
-#define READ_BUFFER_SIZE 64
+#define READ_BUFFER_SIZE (int)64
 
 /* Spusti cast aplikace v rezimu uceni
  *

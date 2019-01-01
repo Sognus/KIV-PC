@@ -7,9 +7,11 @@
 #include <stdbool.h>
 
 #include "config.h"
+#include "lcs.h"
+#include "string_helper.h"
 
 /* Pocet symbolu, ktere ukladame do abecedy (8bit - 0 az 255) */
-#define ALPHABET_SIZE (unsigned char)(256)
+#define ALPHABET_SIZE 256
 /* Prevod znaku na nezapornou ciselnou hodnotu 0-255 */
 #define CHAR_TO_INDEX(c) ((unsigned char)c)
 
@@ -46,5 +48,13 @@ void trie_display(trie_node *root, char *str, int level);
 
 /* Vypise nenulovy obsah vnitrniho pole trie_node */
 void trie_print_node(trie_node *node);
+
+/* Rekurzivne uvolni pamet struktury trie  */
+void trie_free(trie_node *root);
+
+void trie_manipulate_second(trie_node *save_root,trie_node *root, char *current_word, char *str, int level);
+
+/* Funkce, ktera vypise obsah trie */
+void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *current_node, char *str, int level, int longest_word);
 
 #endif //KIV_PC_TRIE_H

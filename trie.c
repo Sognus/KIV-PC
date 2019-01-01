@@ -36,10 +36,10 @@ trie_node *create_trie_node(void)
 void trie_insert(trie_node *root, char *key)
 {
     /* Deklarace promennych */
-    int level;
-    size_t length;
-    int index;
-    trie_node *pCrawl;
+    int level = 0;
+    long length = 0;
+    int index = 0;
+    trie_node *pCrawl = NULL;
 
     /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
     if(root == NULL)
@@ -64,7 +64,6 @@ void trie_insert(trie_node *root, char *key)
         /* Zjisteni kam se v aktualnim levelu ulozi znak */
         index = CHAR_TO_INDEX(key[level]);
 
-        /* Pokud na danem miste neexistuje node, vytvor node - v opracnem pripade zvys pocitadlo vyskytu */
         if (!pCrawl->children[index]) {
             pCrawl->children[index] = create_trie_node();
         }
@@ -162,11 +161,30 @@ void trie_print_node(trie_node *node)
     printf("<TRIE NODE CHILDREN END>\n");
 }
 
+/* Rekurzivne uvolni pamet struktury trie  */
+void trie_free(trie_node *root)
+{
+    int x = 0;
+    if(root == NULL)
+    {
+        /* Neni co uvolnovat */
+        return;
+    }
+
+    for(x = 0; x < ALPHABET_SIZE; x++){
+        if(root->children[x] != NULL)
+        {
+            trie_free(root->children[x]);
+        }
+    }
+    free(root);
+}
+
 /* Funkce, ktera vypise obsah trie */
 void trie_display(trie_node *root, char *str, int level)
 {
     /* Deklarace */
-    unsigned char i;
+    int i;
 
     /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
     if(root == NULL)
@@ -205,3 +223,115 @@ void trie_display(trie_node *root, char *str, int level)
         }
     }
 }
+
+/* Funkce, ktera vypise obsah trie */
+void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *current_node, char *str, int level, int longest_word)
+{
+    /* Deklarace */
+    int i = 0;
+
+    /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
+    if(current_node == NULL)
+    {
+        /* Technicky retezec neni, ale spise se jedna o jinou chybu */
+        printf("NELZE VYPSAT OBSAH TRIE, ROOT JE NULL\n");
+        return;
+    }
+
+    /* Overeni na vstup - pokud je retezec key NULL, neudelej nic */
+    if(str == NULL)
+    {
+        /* Nemuzeme hledat NULL */
+        if(DEEP_DEBUG)
+        {
+            printf("NELZE VYPSAT OBSAH TRIE, BUFFER JE NULL\n");
+        }
+        return;
+    }
+
+
+    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
+    if (trie_is_leaf_node(current_node))
+    {
+        str[level] = '\0';
+
+        int level2 = 0;
+        char *str2 = calloc((size_t)(longest_word)+10,sizeof(char));
+        trie_manipulate_second(save_root,root, str, str2, level2 );
+        free(str2);
+    }
+
+    for (i = 0; i < ALPHABET_SIZE; i++)
+    {
+        /* Pokud nalezneme nenuloveho potomka, zavolame rekurzivne funkci tree_display */
+        if (current_node->children[i] != NULL)
+        {
+            str[level] = i;
+            trie_manipulate_first(save_root, root ,current_node->children[i], str, level + 1, longest_word);
+        }
+    }
+}
+
+/* Funkce, ktera vypise obsah trie */
+void trie_manipulate_second(trie_node *save_root ,trie_node *root, char *current_word, char *str, int level)
+{
+    /* Deklarace */
+    int i;
+
+    /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
+    if(root == NULL)
+    {
+        /* Technicky retezec neni, ale spise se jedna o jinou chybu */
+        printf("NELZE VYPSAT OBSAH TRIE, ROOT JE NULL\n");
+        return;
+    }
+
+    /* Overeni na vstup - pokud je retezec key NULL, neudelej nic */
+    if(str == NULL)
+    {
+        /* Nemuzeme hledat NULL */
+        if(DEEP_DEBUG)
+        {
+            printf("NELZE VYPSAT OBSAH TRIE, BUFFER JE NULL\n");
+        }
+        return;
+    }
+
+
+    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
+    if (trie_is_leaf_node(root))
+    {
+        str[level] = '\0';
+        /* Ulozeni puvodnich  retezcu do trie */
+        trie_insert(save_root,current_word);
+        trie_insert(save_root, str);
+
+        /* Ulozeni LCS z puvodnich retezcu do trie */
+        char *result = NULL;
+        longest_common_substring(current_word, str, &result);
+
+        /* Pokud byl nalezen nejaky spolecny podretezec, pridej ho do trie */
+        if(strlen(result) > 0) {
+            trie_insert(save_root, result);
+        }
+
+        /* DEBUG */
+        if(DEEP_DEBUG) {
+            printf("LCS: %s x %s -> %s\n" , current_word, str, result);
+        }
+
+        /* Uvolneni pameti  */
+        free(result);
+    }
+
+    for (i = 0; i < ALPHABET_SIZE; i++)
+    {
+        /* Pokud nalezneme nenuloveho potomka, zavolame rekurzivne funkci tree_display */
+        if (root->children[i] != NULL)
+        {
+            str[level] = i;
+            trie_manipulate_second(save_root,root->children[i], current_word, str, level + 1);
+        }
+    }
+}
+

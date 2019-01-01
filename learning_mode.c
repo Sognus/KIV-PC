@@ -11,7 +11,7 @@ int learning_mode(app_context *context)
     char *buffer = NULL;
     int buffer_size = READ_BUFFER_SIZE;
     int buffer_used = 0;
-    trie_node *root;
+    trie_node *root = NULL;
     unsigned char current_char;
     int first_char_of_word = 1;
     char *temp = NULL;
@@ -36,13 +36,23 @@ int learning_mode(app_context *context)
         return -5;
     }
 
-    /* Alokace pameti pro buffer a trii */
-    buffer = malloc((READ_BUFFER_SIZE * sizeof(char)) + 1);
-    root = create_trie_node();
+    /* Alokace pameti pro buffer */
+    buffer = calloc((size_t )(buffer_size+1), sizeof(char));
 
     /* Overeni alokace */
-    if(buffer == NULL || root == NULL)
+    if(buffer == NULL)
     {
+        fclose(file);
+        return -6;
+    }
+
+    /* Alokace pameti pro root prvek Trie */
+    root = create_trie_node();
+
+    if(root == NULL)
+    {
+        fclose(file);
+        free(buffer);
         return -6;
     }
 
@@ -51,11 +61,13 @@ int learning_mode(app_context *context)
         /* Zastaveni cyklu v pripade dosazeni konce souboru */
         if((char)current_char == EOF)
         {
+            /* Narazili jsme na konec slova */
+            trie_insert(root, buffer);
             break;
         }
 
         /* Pokud znak rozdeluje slova */
-        if(isdigit(current_char) || ispunct(current_char) || isspace(current_char))
+        if(isdigit(current_char) || ispunct(current_char) || isspace(current_char) || cp1250_is_word_separator(current_char))
         {
             /* Nenalezli jsme zadny znak - tj. vice rozdelovacu za sebou, ignorujeme */
             if(first_char_of_word)
@@ -65,9 +77,7 @@ int learning_mode(app_context *context)
 
             /* Narazili jsme na konec slova */
             trie_insert(root, buffer);
-            free(buffer);
-            buffer = malloc((READ_BUFFER_SIZE * sizeof(char)) + 1);
-            buffer_size = READ_BUFFER_SIZE;
+            memset(buffer, 0, sizeof(char) * buffer_size);
             buffer_used = 0;
             first_char_of_word = 1;
         }
@@ -104,20 +114,29 @@ int learning_mode(app_context *context)
         }
     }
 
+    /* Provedeni LCS na prectenych slovech */
+
+    /* Vytvoreni TRIE pro ulozeni vysledku - kvuli iteraci skrz starou trii */
+    trie_node *save = create_trie_node();
+
+    int level = 0;
+    char *str_buffer = calloc((size_t)(longest_word)+1, sizeof(char));
+    trie_manipulate_first(save,root,root, str_buffer, level, longest_word);
+    free(str_buffer);
+
     /* */
-    if(DEEP_DEBUG)
+    if(DEBUG)
     {
         int level = 0;
-        char str[longest_word];
-        trie_display(root, str, level);
+        char *str = malloc(sizeof(char) * longest_word + 1);
+        trie_display(save, str, level);
+        free(str);
     }
 
-    /* TODO: čti soubor znak po znaku a hledej oddelovace znaku (X)
-     * TODO: vsechna nalezena slova vloz do trie (X)
-     * TODO: Vsechna slova se vsemi slovy dej do algoritmu LCS a uloz do trie
-     * TODO: vyplivni obsah trie do souboru
-     *
-     * */
+    /* Uvolneni pameti */
+    free(buffer);
+    trie_free(root);
+    trie_free(save);
 
     /* Uzavreni souboru */
     fclose(file);
