@@ -21,7 +21,7 @@ trie_node *create_trie_node()
         for (i = 0; i < ALPHABET_SIZE; i++) {
             node->children[i] = NULL;
         }
-        node->count = 1;
+        node->count = 0;
     }
     /* Navrat vytvorene struktury nebo NULL ukazatele */
     return node;
@@ -69,7 +69,7 @@ void trie_insert(trie_node *root, char *key)
         }
         else
         {
-            pCrawl->children[index]->count++;
+            //pCrawl->children[index]->count++;
         }
 
         /* Nastav ukazatel aktualne zpracovaneho node na node na dalsim levelu (hloubce) */
@@ -77,6 +77,7 @@ void trie_insert(trie_node *root, char *key)
     }
 
     /* Oznaceni posledniho znaku v trii (nejhlubsiho node) jako konec slova */
+    pCrawl->count++;
     pCrawl->end_of_word = 1;
 }
 
@@ -210,7 +211,7 @@ void trie_display(trie_node *root, char *str, int level)
     if (trie_is_leaf_node(root))
     {
         str[level] = '\0';
-        printf("%s - %d\n", str, root->count);
+        printf("%s %d\n", str, root->count);
     }
 
     for (i = 0; i < ALPHABET_SIZE; i++)
@@ -375,6 +376,58 @@ void trie_to_list(list_node *list_root,trie_node *root, char *str, int level)
         {
             str[level] = i;
             trie_to_list(list_root,root->children[i], str, level + 1);
+        }
+    }
+}
+
+/* Funkce, ktera vypise obsah trie do souboru*/
+void trie_to_file(FILE *file,trie_node *root, char *str, int level)
+{
+    /* Deklarace */
+    int i;
+
+    /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
+    if(root == NULL)
+    {
+        /* Technicky retezec neni, ale spise se jedna o jinou chybu */
+        printf("NELZE VYPSAT OBSAH TRIE, ROOT JE NULL\n");
+        return;
+    }
+
+    /* Overeni otevreni souboru */
+    if(file == NULL)
+    {
+        /* Soubor je NULL */
+        return;
+    }
+
+    /* Overeni na vstup - pokud je retezec key NULL, neudelej nic */
+    if(str == NULL)
+    {
+        /* Nemuzeme hledat NULL */
+        if(DEEP_DEBUG)
+        {
+            printf("NELZE VYPSAT OBSAH TRIE, BUFFER JE NULL\n");
+        }
+        return;
+    }
+
+
+    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
+    if (trie_is_leaf_node(root))
+    {
+        str[level] = '\0';
+        /* Formatovany vystup do souboru */
+        fprintf(file,"%s %d\r\n", str, root->count);
+    }
+
+    for (i = 0; i < ALPHABET_SIZE; i++)
+    {
+        /* Pokud nalezneme nenuloveho potomka, zavolame rekurzivne funkci tree_display */
+        if (root->children[i] != NULL)
+        {
+            str[level] = i;
+            trie_to_file(file,root->children[i], str, level + 1);
         }
     }
 }

@@ -49,13 +49,16 @@ int learning_mode(app_context *context)
     /* Alokace pameti pro root prvek Trie */
     root = create_trie_node();
 
+    /* Overeni alokace korenoveho prvku */
     if(root == NULL)
     {
+        /* Alokace nebyla provedena spravne, uvolni veskere pouzite zdroje */
         fclose(file);
         free(buffer);
         return -6;
     }
 
+    /* Nacitani ze souboru znak po znaku */
     while((current_char = ((unsigned char)getc(file))))
     {
         /* Zastaveni cyklu v pripade dosazeni konce souboru */
@@ -75,7 +78,7 @@ int learning_mode(app_context *context)
                 continue;
             }
 
-            /* Narazili jsme na konec slova */
+            /* Narazili jsme na konec slova - vlozime do trie a vynulujeme buffer */
             trie_insert(root, buffer);
             memset(buffer, 0, sizeof(char) * buffer_size);
             buffer_used = 0;
@@ -90,7 +93,6 @@ int learning_mode(app_context *context)
             }
 
             /* Slovo pokracuje, pridame znak do bufferu */
-            /* TODO CP1250_tolower */
             buffer[buffer_used] = cp1250_tolower(current_char);
             buffer_used++;
 
@@ -130,33 +132,44 @@ int learning_mode(app_context *context)
     /* Deklarace iteracnich promennych */
     list_node *iter1 = list_root_node;
     list_node *iter2 = NULL;
-    char *buf = calloc((size_t)(longest_word) + 1, sizeof(char));
-    
+    char *buf = NULL;
+
+    /* Iterace nalezenymi slovy - vytvoreni trie pro koreny */
     while(iter1)
     {
         iter2 = iter1->next;
         while(iter2)
         {
+
             longest_common_substring(iter1->content, iter2->content, &buf);
-            if(strlen(buf) > 0) {
+
+            /* DEBUG - vypis aktualne zpracovavanych slov */
+            if(DEEP_DEBUG) {
+                printf("%s x %s -> %s\n", iter1->content, iter2->content, buf);
+            }
+
+            /* Pridej slovo pokud existuje a pokud vyhovuje parametru -msl */
+            if(strlen(buf) > 0 && strlen(buf) >= context->min_stem_length) {
                 trie_insert(save_root, buf);
             }
+            free(buf);
             iter2 = iter2->next;
         }
         iter1 = iter1->next;
     }
 
-    char *buff2 = calloc((size_t)(longest_word) + 1, sizeof(char));
-    int lvl = 0;
-    trie_display(save_root, buff2, lvl);
+    /* Debug - vypis ulozenych dat */
+    if(DEBUG) {
+        char *buff2 = calloc((size_t) (longest_word) + 1, sizeof(char));
+        int lvl = 0;
+        trie_display(save_root, buff2, lvl);
+        free(buff2);
+    }
 
-
+    /* Uvolneni pameti */
     free_list(list_root_node);
-    free(buf);
-    free(buff2);
 
-
-    /* */
+    /* DEBUG: Vypis trie  */
     if(DEBUG)
     {
         int level = 0;
@@ -165,13 +178,22 @@ int learning_mode(app_context *context)
         free(str);
     }
 
+    /* Dump trie do stems.dat */
+    int level_dump = 0;
+    char *str_dump = malloc(sizeof(char) * longest_word + 1);
+    FILE *file_dump = fopen("stems.dat", "w");
+    trie_to_file(file_dump, save_root, str_dump, level_dump);
+    free(str_dump);
+    fclose(file_dump);
+
     /* Uvolneni pameti */
     free(buffer);
     trie_free(root);
-    //trie_free(save);
+    trie_free(save_root);
 
     /* Uzavreni souboru */
     fclose(file);
 
+    /* Vse se podarilo - navratova hodnota pro main */
     return 0;
 }

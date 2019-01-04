@@ -62,4 +62,7 @@ void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *cur
 /* Funkce, ktera vypise obsah trie do spojoveho seznamu */
 void trie_to_list(list_node *list_root,trie_node *root, char *str, int level);
 
+/* Funkce, ktera vypise obsah trie do souboru*/
+void trie_to_file(FILE *file,trie_node *root, char *str, int level);
+
 #endif //KIV_PC_TRIE_H

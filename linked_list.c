@@ -56,6 +56,14 @@ void insert_list_node(list_node *root, list_node *item)
 
     while(crawl->next != NULL)
     {
+
+
+        /* Zadany klic jiz existuje v listu, preskakuji duplicitni zaznam */
+        if(strcmp(item->content, crawl->content) == 0)
+        {
+
+            return;
+        }
         crawl = crawl->next;
     }
     /* Vlozime odkaz na novy prvek za posledni prvek */

@@ -137,8 +137,8 @@ app_context *create_app_context(int argc, char **argv)
     }
 
     /* Nastaveni standardnich hodnot stem */
-    context->min_stem_length = 0;
-    context->min_stem_freq = 0;
+    context->min_stem_length = 3;
+    context->min_stem_freq = 10;
 
     /* Overeni zbylych vstupu pro hodnoty stem */
     for(i = APP_CONTEXT_OTHERS_START_INDEX; i < argc; i++)
