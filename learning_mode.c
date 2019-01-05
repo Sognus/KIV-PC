@@ -17,11 +17,6 @@ int learning_mode(app_context *context)
     char *temp = NULL;
     int longest_word = 0;
 
-    if(DEBUG)
-    {
-        printf("LEARNING MODE\n");
-    }
-
     /* Aplikacni kontext je NULL - nelze dale pokracovat */
     if(context == NULL)
     {
@@ -29,17 +24,16 @@ int learning_mode(app_context *context)
     }
 
     /* Otevreni souboru pro cteni */
-
     file = fopen(context->input_file ,"r");
     if (file == NULL) {
         /* Chybi opravneni ke cteni souboru nebo se jej nepodarilo otevrit */
         return -5;
     }
 
-    /* Alokace pameti pro buffer */
+    /* Alokace pameti pro buffer pro nacitani slov ze souboru */
     buffer = calloc((size_t )(buffer_size)+1, sizeof(char));
 
-    /* Overeni alokace */
+    /* Overeni alokace pameti pro buffer nacitani slov */
     if(buffer == NULL)
     {
         fclose(file);
@@ -140,13 +134,8 @@ int learning_mode(app_context *context)
         iter2 = iter1->next;
         while(iter2)
         {
-
+            /* Vytvoreni nejdelsiho podretezce - ulozeni do promenne buf */
             longest_common_substring(iter1->content, iter2->content, &buf);
-
-            /* DEBUG - vypis aktualne zpracovavanych slov */
-            if(DEEP_DEBUG) {
-                printf("%s x %s -> %s\n", iter1->content, iter2->content, buf);
-            }
 
             /* Pridej slovo pokud existuje a pokud vyhovuje parametru -msl */
             if(strlen(buf) > 0 && strlen(buf) >= context->min_stem_length) {
@@ -158,25 +147,8 @@ int learning_mode(app_context *context)
         iter1 = iter1->next;
     }
 
-    /* Debug - vypis ulozenych dat */
-    if(DEBUG) {
-        char *buff2 = calloc((size_t) (longest_word) + 1, sizeof(char));
-        int lvl = 0;
-        trie_display(save_root, buff2, lvl);
-        free(buff2);
-    }
-
     /* Uvolneni pameti */
     free_list(list_root_node);
-
-    /* DEBUG: Vypis trie  */
-    if(DEBUG)
-    {
-        int level = 0;
-        char *str = malloc(sizeof(char) * longest_word + 1);
-        //trie_display(save, str, level);
-        free(str);
-    }
 
     /* Dump trie do stems.dat */
     int level_dump = 0;

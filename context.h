@@ -58,4 +58,11 @@ int strtol_error_detect(char *nptr, char **endptr, long number);
 /* Uvolni pamet alokovanou pro strukturu app_context */
 void free_app_context(app_context *context);
 
+/* Pokusi se otevrit soubor ke cteni
+ *
+ * Vrati 1 pokud soubor lze otevrit
+ * Vrati 0 pokud soubor nelze otevrit nebo neexistuje
+ */
+int file_exists(const char *file_name);
+
 #endif //KIV_PC_CONTEXT_H

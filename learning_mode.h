@@ -12,8 +12,6 @@
 #include "string_helper.h"
 #include "lcs.h"
 
-#define READ_BUFFER_SIZE (int)64
-
 /* Spusti cast aplikace v rezimu uceni
  *
  * Vraci 0 pokud nenastane chyba, jine cislo pri chybe

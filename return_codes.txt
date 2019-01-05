@@ -5,3 +5,4 @@
 -4 (252): Nelze urcit pozadovanou operaci
 -5 (251): Nebylo mozne otevrit soubor s textem
 -6 (250): Nelze alokovat pamet
+-7 (249): Databaze korenu nebyla nalezena nebo nemohla byt prectena

@@ -55,6 +55,13 @@ void trie_insert(trie_node *root, char *key)
 
     /* Zjisteni delky vstupniho klice */
     length = strlen(key);
+
+    /* Delka retezce je prilis mala na vlozeni */
+    if(length < 1)
+    {
+        return;
+    }
+
     /* Pocatecni ukazatel na korenovy node */
     pCrawl = root;
 
@@ -66,10 +73,6 @@ void trie_insert(trie_node *root, char *key)
 
         if (!pCrawl->children[index]) {
             pCrawl->children[index] = create_trie_node();
-        }
-        else
-        {
-            //pCrawl->children[index]->count++;
         }
 
         /* Nastav ukazatel aktualne zpracovaneho node na node na dalsim levelu (hloubce) */
@@ -413,7 +416,7 @@ void trie_to_file(FILE *file,trie_node *root, char *str, int level)
     }
 
 
-    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
+    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu do souboru */
     if (trie_is_leaf_node(root))
     {
         str[level] = '\0';
@@ -428,6 +431,79 @@ void trie_to_file(FILE *file,trie_node *root, char *str, int level)
         {
             str[level] = i;
             trie_to_file(file,root->children[i], str, level + 1);
+        }
+    }
+}
+
+/* V dane strukture Trie najde nejdelsi koren a ulozi jej do promenne output */
+void trie_find_longest_stem(trie_node *node, char *word, char *buffer, int level, char *output)
+{
+    /* Deklarace */
+    int i;
+
+    /* Overeni vstupu - pokud je ukazatel na node NULL, neudelej nic */
+    if(node == NULL)
+    {
+        /* Technicky retezec neni, ale spise se jedna o jinou chybu */
+        return;
+    }
+
+    /* Overeni na vstup - pokud je retezec key NULL, neudelej nic */
+    if(buffer == NULL)
+    {
+        /* Nemuzeme hledat NULL */
+        if(DEEP_DEBUG)
+        {
+            printf("NELZE VYPSAT OBSAH TRIE, BUFFER JE NULL\n");
+        }
+        return;
+    }
+
+
+    /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
+    if (trie_is_leaf_node(node))
+    {
+        buffer[level] = '\0';
+        //printf("%s %d\n", buffer, node->count);
+        /* TODO:
+         *  Pokud je retezec output NULL nebo strlen < 1, nastavime
+         *  retezec output na aktualni buffer v pripade ze pocet vyskytu  >= msf
+         *
+         * TODO:
+         *  pokud tomu tak neni, nastavime retezec output v pripade ze je retezec vetsi nez
+         *  jiz nalezeny retezec
+         *
+         * TODO:
+         *  1. LCS -> pokud vrati nenulovy retezec -> pak je buffer slovo korenem
+         *  2. pokud je slovo korenem -> overit zda je buffer delsi nez aktualni koren
+         *  3. pokud buffer delsi -> nastav output na buffer
+         *
+         * */
+        /* Ulozeni LCS z puvodnich retezcu do trie */
+        char *result = NULL;
+        longest_common_substring(buffer, word, &result);
+
+        /* Jeden retezec je podretezcem druheho a retezec v bufferu
+         * je delsi nez aktualne nejdelsi retezec
+         */
+        if(strlen(result) > 0 && strlen(result) > strlen(output))
+        {
+            /* Zkopiruj novy nejdelsi retezec do promenne vystupu */
+            strcpy(output, buffer);
+            /* Ukonci retezec terminatorem */
+            output[strlen(result)] = '\0';
+        }
+        /* Uvolni pamet alokovanou LCS */
+        free(result);
+    }
+
+    for (i = 0; i < ALPHABET_SIZE; i++)
+    {
+        /* Pokud nalezneme nenuloveho potomka, zavolame rekurzivne funkci tree_display */
+        if (node->children[i] != NULL)
+        {
+            buffer[level] = i;
+            trie_find_longest_stem(node->children[i], word, buffer, level + 1, output);
         }
     }
 }

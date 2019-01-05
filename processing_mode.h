@@ -8,6 +8,7 @@
 #include "config.h"
 #include "context.h"
 #include "trie.h"
+#include "file_helper.h"
 
 /* Spusti cast aplikace v rezimu zpracovani
  *
