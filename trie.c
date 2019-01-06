@@ -464,36 +464,19 @@ void trie_find_longest_stem(trie_node *node, char *word, char *buffer, int level
     if (trie_is_leaf_node(node))
     {
         buffer[level] = '\0';
-        //printf("%s %d\n", buffer, node->count);
-        /* TODO:
-         *  Pokud je retezec output NULL nebo strlen < 1, nastavime
-         *  retezec output na aktualni buffer v pripade ze pocet vyskytu  >= msf
-         *
-         * TODO:
-         *  pokud tomu tak neni, nastavime retezec output v pripade ze je retezec vetsi nez
-         *  jiz nalezeny retezec
-         *
-         * TODO:
-         *  1. LCS -> pokud vrati nenulovy retezec -> pak je buffer slovo korenem
-         *  2. pokud je slovo korenem -> overit zda je buffer delsi nez aktualni koren
-         *  3. pokud buffer delsi -> nastav output na buffer
-         *
-         * */
+
         /* Ulozeni LCS z puvodnich retezcu do trie */
         char *result = NULL;
         longest_common_substring(buffer, word, &result);
 
-        /* Jeden retezec je podretezcem druheho a retezec v bufferu
-         * je delsi nez aktualne nejdelsi retezec
-         */
-        if(strlen(result) > 0 && strlen(result) > strlen(output))
+        if(result != NULL)
         {
-            /* Zkopiruj novy nejdelsi retezec do promenne vystupu */
-            strcpy(output, buffer);
-            /* Ukonci retezec terminatorem */
-            output[strlen(result)] = '\0';
+            if(strlen(result) > strlen(output) && strlen(result) == strlen(buffer))
+            {
+                strcpy(output, buffer);
+            }
         }
-        /* Uvolni pamet alokovanou LCS */
+
         free(result);
     }
 

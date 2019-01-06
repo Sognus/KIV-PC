@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
     {
         /* rezim uceni */
         rtn_code = learning_mode(context);
+
     }
     else
     {

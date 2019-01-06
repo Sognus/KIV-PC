@@ -1,7 +1,7 @@
 #include "string_helper.h"
 
 /* Overi jestli dany znak je oddelovacem slov v kodovani CP1250 */
-cp1250_is_word_separator(unsigned char c)
+int cp1250_is_word_separator(unsigned char c)
 {
     const unsigned char separators[] = {130, 132, 133, 139, 145, 146,147, 148, 149, 150, 151, 155, 161, 166, 167, 168, 171, 172, 173, 174, 176,177, 178, 179, 180,182, 183, 184, 187,189, 255};
     const int seperator_size = 31;

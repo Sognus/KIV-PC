@@ -40,7 +40,7 @@ int strtol_error_detect(char *nptr, char **endptr, long number)
         if(DEEP_DEBUG) {
             printf(" number : %lu  invalid  (no digits found, 0 returned)\n", number);
         }
-        err = 1;
+        //err = 1;
     }
     else if (errno == ERANGE && number == LONG_MIN) {
         if(DEEP_DEBUG) {
@@ -119,7 +119,7 @@ app_context *create_app_context(int argc, char **argv)
             /* Pripraveni pameti pro kopirovani retezce */
             context->input_text = malloc(input_len+1-2);
             /* Kopirovani retezce do struktury pri vynechani prvniho znaku */
-            stpcpy(context->input_text, &(argv[APP_CONTEXT_INPUT_INDEX][1]));
+            strcpy(context->input_text, &(argv[APP_CONTEXT_INPUT_INDEX][1]));
             /* Useknuti posledniho znaku vstupniho retezce */
             context->input_text[input_len-1] = '\0';
         }
@@ -130,7 +130,7 @@ app_context *create_app_context(int argc, char **argv)
             /* Pripraveni pameti pro kopirovani retezce */
             context->input_text = malloc(input_len+1);
             /* Kopirovani retezce do struktury */
-            stpcpy(context->input_text, argv[APP_CONTEXT_INPUT_INDEX]);
+            strcpy(context->input_text, argv[APP_CONTEXT_INPUT_INDEX]);
             context->input_text[input_len] = '\0';
         }
 

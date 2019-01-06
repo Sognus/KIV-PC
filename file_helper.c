@@ -221,8 +221,8 @@ int file_read_words_to_list(char *file_name, list_node *root)
  */
 int string_read_words_to_list(char *string, list_node *node)
 {
-    int longest_word = 0;
-    FILE *file = NULL;
+    char *pch = NULL;
+    char *delims = " ";
 
     if(string == NULL || strlen(string) < 1)
     {
@@ -230,29 +230,13 @@ int string_read_words_to_list(char *string, list_node *node)
         return -1;
     }
 
-    /* Docasny soubor */
-    file = fopen("tmp.txt", "w");
 
-    if(file == NULL)
+    pch = strtok(string, delims);
+    while (pch != NULL)
     {
-        /* Docasny soubor nemohl byt vytvoren */
-        return -1;
+        insert_list_string(node, pch, 1);
+        pch = strtok(NULL, delims);
     }
-
-    /* Vlozeni prohledavaneho retezce do souboru */
-    fputs(string ,file);
-
-    /* Uzavreni docasneho souboru */
-    fclose(file);
-
-    /* Precteni docasneho souboru do spojoveho seznamu */
-    longest_word = file_read_words_to_list("tmp.txt", node);
-
-    /* Smazani docasneho souboru */
-    remove("tmp.txt");
-
-    /* Navraceni - chyba nebo nejdelsi slovo */
-    return longest_word;
 }
 
 /* Projde retezec, ziska z nej vsechny slova a ulozi jej do spojoveho seznamu

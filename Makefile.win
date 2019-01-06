@@ -1,0 +1,44 @@
+# Compiler choice
+CC=gcc
+# Binary name
+BIN=dfs.exe
+# Compiler FLAGS
+CFLAGS = -Wall
+
+# *********************************************
+
+# Build binary and then clean
+all: build clean
+
+build: context.o file_helper.o lcs.o learning_mode.o linked_list.o main.o processing_mode.o string_helper.o trie.o
+	$(CC) $(CFLAGS) -lm -o $(BIN) 
+
+context.o: 
+	$(CC) $(CFLAGS) -c context.c
+
+file_helper.o:
+	$(CC) $(CFLAGS) -c file_helper.c
+
+lcs.o:
+	$(CC) $(CFLAGS) -c lcs.c
+
+learning_mode.o: 
+	$(CC) $(CFLAGS) -c learning_mode.c
+
+linked_list.o:
+	$(CC) $(CFLAGS) -c linked_list.c
+
+main.o: 
+	$(CC) $(CFLAGS) -c main.c
+
+processing_mode.o:
+	$(CC) $(CFLAGS) -c processing_mode.c
+
+string_helper.o:
+	$(CC) $(CFLAGS) -c string_helper.c
+
+trie.o:
+	$(CC) $(CFLAGS) -c trie.c
+	
+clean:
+	rm *.o

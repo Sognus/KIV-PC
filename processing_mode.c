@@ -37,6 +37,8 @@ int processing_mode(app_context *context)
     /* Zjisteni slov ze vstupniho retezce */
     longest_word_input = string_read_words_to_list(context->input_text, input_list);
 
+    print_list(input_list);
+
     /* Maximalni delka slova */
     max_word = long_max(longest_word, longest_word_input);
 
