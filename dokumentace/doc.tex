@@ -1,0 +1,138 @@
+﻿\documentclass[12pt, a4paper]{article}
+% Zobrazení frame - pro debug
+%\usepackage{showframe}
+% Tuto nechat
+\usepackage{comment} 
+\usepackage{lmodern}
+\usepackage[inline]{enumitem}
+\usepackage{xcolor}
+\usepackage{blindtext}
+\usepackage{scrextend}
+\usepackage{cmap}
+\usepackage[czech]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[capposition=bottom]{floatrow}
+\usepackage{float}
+\usepackage{hyperref}
+\addtokomafont{labelinglabel}
+{\sffamily}
+\begin{document}
+
+% Pouze informace
+\graphicspath{ {img/} }
+
+% Úvodní stránka
+\thispagestyle{empty}
+\begin{center}
+\begin{minipage}{0.75\linewidth}
+    \centering
+%University logo
+    \vspace{3cm}
+    \includegraphics[width=0.75\linewidth]{fav-logo.pdf}\\
+    \vspace{0.5cm}
+%Thesis title
+    {\uppercase{\Large KIV/PC \\ \textbf{JednoduchÝ stemmer}\par}}
+    \vspace{3cm}
+%Author's name
+    {\Large Jakub Vítek - A16B0165P\par}
+    \vspace{2cm}
+%Degree
+    \vspace{1cm}
+%Date
+    {\Large Prosinec 2018}
+\end{minipage}
+\end{center}
+\clearpage
+\newpage
+
+% Část obsahu dokumentu
+\tableofcontents
+\newpage
+
+\section{Zadání}
+\paragraph{}
+\noindent Naprogramujte v ANSI C přenositelnou \textbf{konzolovou aplikaci}, která bude pracovat jako tzv. \textit{stemmer}. Stemmer je algoritmus, resp. program, který hledá kořeny slov. Stemmer pracuje ve dvou režimech: (i) v režimu \textbf{učení}, kdy je na vstupu velké množství textu (tzv. \textit{korpus}) v jednom konkrétním etnickém jazyce (libovolném) a na výstupu pak slovním (seznam) kořenů slov; nebo (ii) v režimu zpracování slov, kdy je na vstupu slovo (nebo sekvence slov) a stemmer ke každému z nich určí jeho kořen. Tento proces, tzv. \textit{stemming} je jedním ze základních stavebních kamenů nesmírně zajímavého odvětví umělé inteligence, které se označuje jako NLP (= Natural Language Processing, česky zpracování přirozeného jazyka).
+
+\paragraph{}
+Vaším úkolem je tedy implementace takového stemmeru, ovšem velice jednoduchého, podle dále uvedených instrukcí. 
+
+\paragraph{}
+Stemmer se bude spouštět příkazem \textbf{sistem.exe} (corpus-file | ["]word-sequence["]) [-msl=<\textit{celé číslo}>] [-msf=<\textit{celé číslo}>].
+
+\paragraph{}
+Symbol (\textbf{corpus-file}) zastupuje jméno vstupního textového souboru s korpusem, tj. velkým množstvím textu, který se použije k "natrénování" stemmeru. Přípona souboru nemusí být uvedena; pokud uvedena není, předpokládejte, že má soubor příponu .\textbf{txt}. Symbol (\textbf{word-sequence}) zastupuje slovo nebo sekvenci slov, k nimž má stemmer určit kořeny. Režim činností programu je dán předaným parametrem. Je-li parametrem jméno (a případně cesta k) souboru, pak bude stemmer pracovat v režimu učení, tedy tvorby databáze kořenů a na základě analýzy dat z korpusu. Je-li parametrem slovo nebo sekvece slov (ta musí být uzavřena v uvozovkách), pak stemmer bude pracovat v režimu zpracování slov, tedy určování kořene každého slova ze sekvence.
+
+\paragraph{}
+Program může být spuštěn se dvěma nepovinnými parametry:
+
+\begin{labeling}{alligator}
+\item [-msl] - Nepovinný parametr \textbf{-msl=}(\textit{celé číslo}) určuje minimální délku kořene slova (msl = Minimum Stem Length), který bude uložen do databáze kořenů. Není-li tento parametr předán, použije se implicitní minimální délka kořene 3 znaky. Tento parametr je tedy zřejmě použitelný jen v kombinaci s cestou ke korpusu, teady v režimu učení stemmeru
+\item [-msf] - Nepovinný parametr \textbf{-msf=}(\textit{celé číslo}) určuje minimální počet výskytů příslušného kořene (msf = Minimum Stem Frequency). Pokud se tento kořen v korpusu nevyskytl aspoň tolikrát, kolik je určeno tímto parametrem, nepoužije se při zpracování slov, tj. stemmer nemůže u žádného zpracovávaného slova oznámit, že tento kořen je kořen předmětného slova. Není-li tento parametr předán, použije se implicitní minimální počet výskytů kořene 10x. Tento parametr je tedy zřejmě použitelný jen v kombinaci se slovem nebo sekvencí slov, tedy v režimu zpracování slov.
+\end{labeling}
+
+\paragraph{}
+Program může být během testování spuštěn například takto (režim učení):
+\begin{verbatim}
+. . . \>sistem.exe e:\data\czech-corpus.txt -msl=4
+\end{verbatim}
+
+\paragraph{}
+Následně v režimu zpracování slov třeba takto:
+\begin{verbatim}
+. . . \>sistem.exe "šel pes do lesa" -msf=15
+\end{verbatim}
+\begin{verbatim}
+. . . \>sistem.exe bezdomovec -msf=5
+\end{verbatim}
+
+\paragraph{}
+Úkolem vašeho programu tedy je v režimu učení vytvořit databázi kořenů (textový soubor) a v režimu zpracování slov vypsat kořen každého slova ze vstupní sekvence. 
+
+V případě, že nebude programu předán parametr prvního nebo druhého uvedeného typu, vypište krátké chybové hlášení (anglicky) a oznamte chybu operačnímu prostředí pomocí nenulového návratového kódu. Pokud bude stemmeru při prvním spuštění předáno slovo nebo sekvence slov, ukončete jej chybovým stavem (a krátkým vysvětlujícím hlášením), indikujícím, že nedošlo k předchozímu vytvoření databáze kořenů slov, a tudíž není možné u slov ze sekvence jejich kořeny určit.
+
+\paragraph{}
+Hotovou práci odevzdejte v jediném archivu typu \textbf{ZIP} prostřednictvím automatického odevzdávacího a validačního systému. Archiv nechť obsahuje všechny zdrojové soubory potřebné k přeložení programu, \textbf{makefile} pro Windows i Linux (pro překlad v Linuxu připravte soubor pojmenovaný makefile a pro Windows makefile.win) a dokumentaci ve formátu PDF vytvořenou v typografickém systému \TeX  resp. \LaTeX. Bude-li některá z částí chybět, kontrolní script Vaši práci odmítne.
+
+\paragraph{}
+Úplné zadání je dostupné na adrese:\\ \href{https://www.kiv.zcu.cz/studies/predmety/pc/doc/work/sw2018-03.pdf}{https://www.kiv.zcu.cz/studies/predmety/pc/doc/work/sw2018-03.pdf}.
+
+% Část pro analýzu úlohy
+
+\section{Analýza úlohy}
+\paragraph{}
+Stematizace (anglicky stemming) je postup, během kterého se slova převádějí na jejich základ - tzv. stem. Základem rozumíme tu část slova, která se v různých tvarech téhož slova nemění. Obvykle bývá základ slova také jeho gramatickým kořenem, nemusí tomu však být pravidlem. Často jsou příbuzná slova převedena na stejný základ, ze kterého byla odvozena a to i přes to, že daný základ nemusí být jejich gramatickým kořenem. Tyto postupy se hojně využívají při zpracování přirozeného jazyka či například jako základ pro funkcionalitu internetových vyhledavačů.
+
+\paragraph{}
+Bohužel není stematizaci možné provádět se všemi jazyky - problematická je například čínština. Většina jazyků patřících do skupiny Indo-Evropské rodiny jazyků vytváří slova na základě jasně daných gramatických pravidel. Na slova těchto jazyků je možné použít některý ze stematizačních algoritmů. Pro tyto jazyky je pak typické, že jejich základem je kořen slova, ze kterého lze odvodit slova další přidáním předpon či přípon.
+
+\paragraph{}
+Stemmer vytvářený v rámci této práce nebude pravidlový, ale statistický. Kořeny slov budou v režimu učení odvozovány analýzou velkého množství textu. Výsledkem této analýzy bude databáze všech daných kořenů spolu s počtem jejich výskytů. V režimu zpracování pak bude databáze kořenů prohledávána a ke každému detekovanému slovu ve vstupním argumentu bude třeba nalézt nejdelší kořen vyhovující nepovinnému parametru.
+
+V rámci práce bude nutné za pomocí standardní knihovny \textit{stdio} přečíst obsah vstupního korpusu s textem. V tomto textu bude nutné nalézt slova a uložit je do některé z dostupných datových struktur. Čtení těchto dat můžeme provést načtením celé řádky a její následným rozdělením dle dělících znaků či čtením jednotlivých znaků. Raději se přikláním k načítání obsahu souboru znak po znaku vzhledem k tomu, že to umožnuje snáze pracovat s načítanými daty. Se znaky v tomto případě můžeme manipulovat přímo v průběhu načítání před tím, než načtený znak uložíme do vyrovnávací proměnné. Danou manipulací může být například převod velkého znaku na malý, což je triviálním problémem pro znaky ze sady ASCII, ale pro znakovou sadu CP1250 potřebujeme vytvořit vlastní převodní funkci. Znaková sada CP1250 má také své vlastní dělící znaky. Manipulace při načítání nám ušetří nutnost vracet se k řetězci, jež byl načten jiným způsobem. V případě nalezení dělicího znaku pak obsah vyrovnávací paměti vložíme do zvolené datové struktury a obsah vyrovnávací paměti vynulujeme. Stejný způsob můžeme také použít při detekování slov ze vstupního argumentu.
+
+\subsection{Dostupné datové struktury}
+\subsubsection{Spojový seznam}
+\paragraph{}
+Spojový seznam (Linked list) je strukturou určenou k ukládání dat neznámého množství. Základem spojového seznamu je uzel, který vždy obsahuje ukládanou hodnotu a ukazatel na následující prvek. Implementace vkládání dat a vyhledávání v nich je velice jednoduchá, bohužel však není příliš efektivní vzhledem k tomu, že musíme daty proiterovat v případě vkládání až na poslední prvek. V nejhorším případě se pak dostaneme na složitost O(n). Další nevýhodou je, že tato struktura ve svém základu nemá vkládané prvky abecedně či jinak řazené, prvky jsou strukturovány ve stejném pořadí, ve kterém jsou ukládány. Spojový seznam pak můžeme využít například pro implementaci hashovací tabulky.
+
+\paragraph{}
+\textbf{!!! SMAZAT - VLOŽIT OBRÁZEK SPOJOVÉHO SEZNAMU !!!}
+
+\subsubsection{Hashovací tabulka}
+\paragraph{}
+Hashovací tabulka je datovou strukturou optimalizovanou pro vyhledávání. Struktura se využívá pro ukládání dvojic klíč-hodnota. Jejím základem je standardně pole s určenou velikostí a hashovací funkce, která převádí klíče na indexy. Díky této funkci jsme schopni přistupovat na daný index se složitostí O(1), celková složitost však záleží na implementaci úložné struktury na daném indexu - velice často je jako úložná struktura využit spojový seznam se svou složitostí O(n), alternativně je také možné pro ukládání využít binární vyhledávací strom. Ve svém základu hashovací tabulka není seřazena. Efektivita této struktury je závislá na vhodné hashovací funkci.
+
+\paragraph{}
+\textbf{!!! SMAZAT - VLOŽIT OBRÁZEK HASHOVACÍ TABULKY !!!}
+
+\subsubsection{Trie}
+\paragraph{}
+\textbf{!!! SMAZAT - NAPSAT TEXT K TRII !!!}
+\paragraph{}
+\textbf{!!! SMAZAT - VLOŽIT OBRÁZEK TRIE !!!}
+
+
+
+\end{document}

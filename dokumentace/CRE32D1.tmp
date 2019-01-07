@@ -1,0 +1,81 @@
+﻿\documentclass[12pt, a4paper]{article}
+% Zobrazení frame - pro debug
+%\usepackage{showframe}
+% Tuto nechat
+\usepackage{comment} 
+\usepackage{lmodern}
+\usepackage[inline]{enumitem}
+\usepackage{xcolor}
+\usepackage{blindtext}
+\usepackage{scrextend}
+\usepackage{cmap}
+\usepackage[czech]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[capposition=bottom]{floatrow}
+\usepackage{float}
+\addtokomafont{labelinglabel}
+{\sffamily}
+\begin{document}
+
+% Pouze informace
+\graphicspath{ {img/} }
+
+% Úvodní stránka
+\thispagestyle{empty}
+\begin{center}
+\begin{minipage}{0.75\linewidth}
+    \centering
+%University logo
+    \vspace{3cm}
+    \includegraphics[width=0.75\linewidth]{fav-logo.pdf}\\
+    \vspace{0.5cm}
+%Thesis title
+    {\uppercase{\Large KIV/PC \\ \textbf{JednoduchÝ stemmer}\par}}
+    \vspace{3cm}
+%Author's name
+    {\Large Jakub Vítek - A16B0165P\par}
+    \vspace{2cm}
+%Degree
+    \vspace{1cm}
+%Date
+    {\Large Prosinec 2018}
+\end{minipage}
+\end{center}
+\clearpage
+\newpage
+
+% Část obsahu dokumentu
+\tableofcontents
+\newpage
+
+\section{Zadání}
+\paragraph{}
+\noindent
+Naprogramujte v ANSI C přenositelnou \textbf{konzolovou aplikaci}, která bude pracovat jako tzv. \textit{stemmer}. Stemmer je algoritmus, resp. program, který hledá kořeny slov. Stemmer pracuje ve dvou režimech: (i) v režimu \textbf{učení}, kdy je na vstupu velké množství textu (tzv. \textit{korpus}) v jednom konkrétním etnickém jazyce (libovolném) a na výstupu pak slovním (seznam) kořenů slov; nebo (ii) v režimu zpracování slov, kdy je na vstupu slovo (nebo sekvence slov) a stemmer ke každému z nich určí jeho kořen. Tento proces, tzv. \textit{stemming} je jedním ze základních stavebních kamenů nesmírně zajímavého odvětví umělé inteligence, které se označuje jako NLP (= Natural Language Processing, česky zpracování přirozeného jazyka).
+
+\paragraph{}
+\noindent
+Vaším úkolem je tedy implementace takového stemmeru, ovšem velice jednoduchého, podle dále uvedených instrukcí. 
+
+\paragraph{}
+{\setlength{\parindent}{0cm}
+Stemmer se bude spouštět příkazem \textbf{sistem.exe} (corpus-file | ["]word-sequence["]) [-msl=<\textit{celé číslo}>] [-msf=<\textit{celé číslo}>].
+}
+\paragraph{}
+Symbol (\textbf{corpus-file}) zastupuje jméno vstupního textového souboru s korpusem, tj. velkým množstvím textu, který se použije k "natrénování" stemmeru. Přípona souboru nemusí být uvedena; pokud uvedena není, předpokládejte, že má soubor příponu .\textbf{txt}. Symbol (\textbf{word-sequence}) zastupuje slovo nebo sekvenci slov, k nimž má stemmer určit kořeny. Režim činností programu je dán předaným parametrem. Je-li parametrem jméno (a případně cesta k) souboru, pak bude stemmer pracovat v režimu učení, tedy tvorby databáze kořenů a na základě analýzy dat z korpusu. Je-li parametrem slovo nebo sekvece slov (ta musí být uzavřena v uvozovkách), pak stemmer bude pracovat v režimu zpracování slov, tedy určování kořene každého slova ze sekvence.
+
+\paragraph{}
+\noindent
+Program může být spuštěn se dvěma nepovinnými parametry:
+
+\begin{labeling}{alligator}
+\item [-msl] - Nepovinný parametr \textbf{-msl=}(\textit{celé číslo})
+\end{labeling}
+
+
+
+
+
+\end{document}

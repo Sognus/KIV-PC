@@ -55,6 +55,12 @@ int learning_mode(app_context *context)
     /* Nacitani ze souboru znak po znaku */
     while((current_char = ((unsigned char)getc(file))))
     {
+        /* Nektere znaky je treba preskocit */
+        if(current_char == '-')
+        {
+            continue;
+        }
+
         /* Zastaveni cyklu v pripade dosazeni konce souboru */
         if((char)current_char == EOF)
         {

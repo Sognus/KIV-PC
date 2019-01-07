@@ -1,0 +1,26 @@
+\select@language {czech}
+\contentsline {section}{\numberline {1}Zad\IeC {\'a}n\IeC {\'\i }}{3}{section.1}
+\contentsline {paragraph}{}{3}{section*.2}
+\contentsline {paragraph}{}{3}{section*.3}
+\contentsline {paragraph}{}{3}{section*.4}
+\contentsline {paragraph}{}{3}{section*.5}
+\contentsline {paragraph}{}{3}{section*.6}
+\contentsline {paragraph}{}{4}{section*.7}
+\contentsline {paragraph}{}{4}{section*.8}
+\contentsline {paragraph}{}{4}{section*.9}
+\contentsline {paragraph}{}{4}{section*.10}
+\contentsline {paragraph}{}{4}{section*.11}
+\contentsline {section}{\numberline {2}Anal\IeC {\'y}za \IeC {\'u}lohy}{5}{section.2}
+\contentsline {paragraph}{}{5}{section*.12}
+\contentsline {paragraph}{}{5}{section*.13}
+\contentsline {paragraph}{}{5}{section*.14}
+\contentsline {subsection}{\numberline {2.1}Dostupn\IeC {\'e} datov\IeC {\'e} struktury}{6}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Spojov\IeC {\'y} seznam}{6}{subsubsection.2.1.1}
+\contentsline {paragraph}{}{6}{section*.15}
+\contentsline {paragraph}{}{6}{section*.16}
+\contentsline {subsubsection}{\numberline {2.1.2}Hashovac\IeC {\'\i } tabulka}{6}{subsubsection.2.1.2}
+\contentsline {paragraph}{}{6}{section*.17}
+\contentsline {paragraph}{}{6}{section*.18}
+\contentsline {subsubsection}{\numberline {2.1.3}Trie}{6}{subsubsection.2.1.3}
+\contentsline {paragraph}{}{6}{section*.19}
+\contentsline {paragraph}{}{6}{section*.20}
