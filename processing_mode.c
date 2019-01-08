@@ -42,10 +42,8 @@ int processing_mode(app_context *context)
     /* Maximalni delka slova */
     max_word = long_max(longest_word, longest_word_input);
 
-    /* TODO: prohledavani TRIE  */
+    /* Hledani korenu pro slova detekovana na vstupu */
     iterator = input_list->next;
-
-    /* TODO: CELY HLEDANI NEJDELSIHO KORENE NEFUNGUJE */
     while(iterator != NULL)
     {
         char *buffer = calloc(max_word + 1, sizeof(char));
@@ -76,5 +74,5 @@ int processing_mode(app_context *context)
     free_list(input_list);
 
     /* Vse v poradku - navrat do main */
-    return 0;
+    return PROGRAM_RETURN_OK;
 }

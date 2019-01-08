@@ -7,26 +7,14 @@ int main(int argc, char *argv[]) {
     app_context *context;
     int i = 0;
 
-    /* DEBUG */
-    if(DEBUG) {
-        for (i = 0; i < argc; i++) {
-            printf("%d: %s\n", i, argv[i]);
-        }
-    }
-
     /* Vytvoreni aplikacniho kontextu */
     context = create_app_context(argc, argv);
-
-    /* debug vypis app_context */
-    if(DEBUG) {
-        print_app_context(context);
-    }
 
     /* Otestovani validity vytvoreni struktury app_context */
     if(context == NULL)
     {
         // Pamet neni alokovana, tudiz nemusi byt uvolnovana
-        return -1;
+        return PROGRAM_RETURN_NO_CONTEXT;
     }
 
     /* Overeni, zda pri vytvareni app_context nastala chyba */
@@ -45,7 +33,7 @@ int main(int argc, char *argv[]) {
     {
         /* Uvolneni alokovane pameti */
         free_app_context(context);
-        return -4;
+        return PROGRAM_RETURN_UNCLEAR_OPERATION;
 
     }
 

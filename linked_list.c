@@ -12,6 +12,12 @@ list_node *create_list_node(char *string, int count)
         return NULL;
     }
 
+    if(count < 0)
+    {
+        /* Nesmyslna hodnota */
+        return NULL;
+    }
+
     /* Alokace a inicializace prvku */
     node = calloc(1, sizeof(list_node));
     node->content = calloc(strlen(string)+1, sizeof(char));
@@ -28,6 +34,7 @@ list_node *create_list_node(char *string, int count)
 /* Ze retezce vytvori prvek seznamu a pokusi se o jeho vlozeni do seznamu*/
 void insert_list_string(list_node *root,char *string, int count)
 {
+    /* Deklarace promenne */
     list_node *node = NULL;
 
     /* Pozn. overeni se neprovadi vzhledem k tomu, ze funkce prakticky
@@ -38,6 +45,7 @@ void insert_list_string(list_node *root,char *string, int count)
 /* Vlozi novy node do aktualniho spojoveho seznamu */
 void insert_list_node(list_node *root, list_node *item)
 {
+    /* Deklarace iteracni promenne */
     list_node *crawl = NULL;
 
     if(root == NULL)
@@ -74,6 +82,7 @@ void insert_list_node(list_node *root, list_node *item)
 /* Vypise cely linked list */
 void print_list(list_node *root)
 {
+    /* Deklarace iteracni promenne */
     list_node *crawl = NULL;
 
     if(root == NULL)

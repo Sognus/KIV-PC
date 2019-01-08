@@ -38,26 +38,14 @@ trie_node *create_trie_node();
  * */
 void trie_insert(trie_node *root, char *key);
 
-/* Vrati jestli v dane trii existuje (1) nebo neexistuje (0) dane slovo */
-int trie_search(trie_node *root, char *key);
-
 /* Vraci jestli je dany node takovy, ze v nem konci nejake slovo */
 int trie_is_leaf_node(trie_node *node);
 
 /* Funkce, ktera vypise obsah trie */
 void trie_display(trie_node *root, char *str, int level);
 
-/* Vypise nenulovy obsah vnitrniho pole trie_node */
-void trie_print_node(trie_node *node);
-
 /* Rekurzivne uvolni pamet struktury trie  */
 void trie_free(trie_node *root);
-
-/* DEPRECATED: Pomocna funkce pro trie_manipulate  */
-void trie_manipulate_second(trie_node *save_root,trie_node *root, char *current_word, char *str, int level);
-
-/* DEPRECATED: Funkce, ktera vypise obsah trie */
-void trie_manipulate_first(trie_node *save_root, trie_node *root, trie_node *current_node, char *str, int level, int longest_word);
 
 /* Funkce, ktera vypise obsah trie do spojoveho seznamu */
 void trie_to_list(list_node *list_root,trie_node *root, char *str, int level);

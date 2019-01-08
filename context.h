@@ -1,12 +1,6 @@
 #ifndef KIV_PC_CONTEXT_H
 #define KIV_PC_CONTEXT_H
 
-#define APP_CONTEXT_PROGRAM_INDEX 0
-#define APP_CONTEXT_INPUT_INDEX 1
-#define APP_CONTEXT_OTHERS_START_INDEX 2
-
-#define APP_CONTEXT_INT_BASE 10
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -36,9 +30,6 @@ typedef struct app_context
 
 /* Na zaklade vstupu z konzole vytvori kontext pro dalsi fungovani aplikace */
 app_context *create_app_context(int argc, char **argv);
-
-/* Vypise textovou reprezentaci struktury app_context na vystup STDOUT */
-void print_app_context(app_context *context);
 
 /* Overi, zda vstup prefix je prefixem retezce string
  *

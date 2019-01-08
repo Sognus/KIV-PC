@@ -1,5 +1,6 @@
 #include "lcs.h"
 
+/* Vytvori nejdelsi spolecny podretezec pro dva vstupni retezce */
 unsigned int longest_common_substring(char *str1, char *str2, char **result) {
     unsigned int i = 0;
     unsigned int j= 0;
@@ -9,16 +10,23 @@ unsigned int longest_common_substring(char *str1, char *str2, char **result) {
     lcs_entry *head = NULL;
     lcs_entry **lcstab = NULL;
 
+    if(str1 == NULL || str2 == NULL)
+    {
+        /* Jeden z retezcu je NULL, vysledek bude take NULL  */
+        *result = NULL;
+        return 0;
+    }
+
     m = strlen(str1);
     n = strlen(str2);
 
-    /* Allocate the table */
+    /* Alokace pameti pro tabulku*/
     lcstab = malloc((m + 1) * sizeof(lcs_entry *));
     for (i = 0; i < m + 1; i++) {
         lcstab[i] = malloc((n + 1) * sizeof(lcs_entry));
     }
 
-    /* Calculate scores for each substring and build chains */
+    /* Vypocet skore pro kazdy podrezec a vytvoreni cesty v tabulce*/
     for (i = 0; i <= m; i++) {
         for (j = 0; j <= n; j++) {
             if (i == 0 || j == 0) {
@@ -41,10 +49,11 @@ unsigned int longest_common_substring(char *str1, char *str2, char **result) {
         }
     }
 
-    /* Allocate the output array and copy the LC substring */
+    /* Alokace pameti pro vysledny retezec */
     *result = calloc((size_t)(max) + 1, sizeof(char));
     (*result)[max] = '\0';
 
+    /* Postup po vytvorene ceste a naplneni vysledku  */
     if(head != NULL)
     {
         for (i = max - 1; head->prev != NULL; i--) {

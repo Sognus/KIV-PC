@@ -173,5 +173,5 @@ int learning_mode(app_context *context)
     fclose(file);
 
     /* Vse se podarilo - navratova hodnota pro main */
-    return 0;
+    return PROGRAM_RETURN_OK;
 }

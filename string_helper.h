@@ -9,9 +9,6 @@
 /* Overi jestli dany znak je oddelovacem slov v kodovani CP1250 */
 int cp1250_is_word_separator(unsigned char c);
 
-/* Prozkouma velikosti retezcu, vrati vetsi z nich  */
-long max_strlen(char *str1, char *str2);
-
 /* Funkce ktera vrati vetsi cislo ze dvou  */
 long long_max(long a, long b);
 

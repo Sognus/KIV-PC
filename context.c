@@ -37,32 +37,32 @@ int strtol_error_detect(char *nptr, char **endptr, long number)
 
     /* test return to number and errno values */
     if (nptr == *endptr-1) {
-        if(DEEP_DEBUG) {
+        if(DEBUG) {
             printf(" number : %lu  invalid  (no digits found, 0 returned)\n", number);
         }
         //err = 1;
     }
     else if (errno == ERANGE && number == LONG_MIN) {
-        if(DEEP_DEBUG) {
+        if(DEBUG) {
             printf(" number : %lu  invalid  (underflow occurred)\n", number);
         }
         err = 1;
     }
     else if (errno == ERANGE && number == LONG_MAX) {
-        if(DEEP_DEBUG) {
+        if(DEBUG) {
             printf(" number : %lu  invalid  (overflow occurred)\n", number);
         }
         err = 1;
     }
     else if (errno == 0 && nptr && !**endptr){
-        if(DEEP_DEBUG) {
+        if(DEBUG) {
             printf(" number : %lu    valid  (and represents all characters read)\n", number);
         }
         err = 0;
     }
     else if (errno == 0 && nptr && **endptr != 0)
     {
-        if(DEEP_DEBUG) {
+        if(DEBUG) {
             printf(" number : %lu    valid  (but additional characters remain)\n", number);
         }
         err = 1;
@@ -94,7 +94,7 @@ app_context *create_app_context(int argc, char **argv)
     {
         /* Minimalni pocet pozadovanych vstupu je 2 */
         printf("Application is missing its required arguments!\n");
-        context->error_code = -2;
+        context->error_code = PROGRAM_RETURN_NOT_ENOUGH_ARGUMENTS;
         return context;
     }
 
@@ -137,8 +137,8 @@ app_context *create_app_context(int argc, char **argv)
     }
 
     /* Nastaveni standardnich hodnot stem */
-    context->min_stem_length = 3;
-    context->min_stem_freq = 10;
+    context->min_stem_length = PROGRAM_DEFAULT_MSL;
+    context->min_stem_freq = PROGRAM_DEFAULT_MSF;
 
     /* Overeni zbylych vstupu pro hodnoty stem */
     for(i = APP_CONTEXT_OTHERS_START_INDEX; i < argc; i++)
@@ -170,33 +170,13 @@ app_context *create_app_context(int argc, char **argv)
             error_detected = strtol_error_detect(num_ptr, &err_ptr, *save_ptr);
             if(error_detected == 1)
             {
-                context->error_code = -3;
+                context->error_code = PROGRAM_RETURN_NUMBER_CONVERSION_ERROR;
             }
         }
     }
 
     /* Navrat ukazatele na strukturu */
     return context;
-}
-
-/* Vypise textovou reprezentaci struktury app_context na vystup STDOUT */
-void print_app_context(app_context *context)
-{
-    /* Overeni ukazatele */
-    if(context == NULL)
-    {
-        printf("APP_CONTEXT JE NULL!\n");
-        return;
-    }
-
-    printf("<APP_CONTEXT>\n");
-    printf("PROGRAM: %s\n", context->program);
-    printf("FILE: %s\n", context->input_file);
-    printf("TEXT: %s\n", context->input_text);
-    printf("MIN STEM LENGTH: %ld\n", context->min_stem_length);
-    printf("MIN STEM FREQ: %ld\n", context->min_stem_freq);
-    printf("ERROR CODE: %d\n", context->error_code);
-    printf("</APP_CONTEXT>\n");
 }
 
 /* Uvolni pamet alokovanou pro strukturu app_context */

@@ -19,46 +19,9 @@ int cp1250_is_word_separator(unsigned char c)
     return 0;
 }
 
-/* Prozkouma velikosti retezcu, vrati vetsi z nich  */
-long max_strlen(char *str1, char *str2)
-{
-    long a = 0;
-    long b = 0;
-
-    if(str1 == NULL && str2 == NULL)
-    {
-        return 0;
-    }
-
-    if(str1 == NULL)
-    {
-        a = 0;
-    }
-    else
-    {
-        a = strlen(str1);
-    }
-
-    if(str2 == NULL)
-    {
-        b = 0;
-    }
-    else
-    {
-        b = strlen(str2);
-    }
-
-    return long_max(a, b);
-
-
-
-
-}
-
 /* Funkce ktera vrati vetsi cislo ze dvou  */
 long long_max(long a, long b)
 {
-
     /* ternarni operator pokud je a vetsi nez b vrat a, jinak vrat b */
     return ((a) >= (b) ? (a) : (b));
 }
