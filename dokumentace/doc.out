@@ -5,3 +5,24 @@
 \BOOKMARK [3][-]{subsubsection.2.1.2}{Hashovac\355 tabulka}{subsection.2.1}% 5
 \BOOKMARK [3][-]{subsubsection.2.1.3}{Trie}{subsection.2.1}% 6
 \BOOKMARK [1][-]{section.3}{Popis implementace}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Datov\351 struktury a typy}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Struktura aplikacn\355ho kontextu}{subsection.3.1}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Struktura jednoho prvku spojov\351ho seznamu}{subsection.3.1}% 10
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Struktura jednoho uzlu trie}{subsection.3.1}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Popis modulu}{section.3}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Modul main.c}{subsection.3.2}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Modul learning\137mode.c}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Modul processing\137mode.c}{subsection.3.2}% 15
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Modul context.c}{subsection.3.2}% 16
+\BOOKMARK [3][-]{subsubsection.3.2.5}{Modul linked\137list.c}{subsection.3.2}% 17
+\BOOKMARK [3][-]{subsubsection.3.2.6}{Modul trie.c}{subsection.3.2}% 18
+\BOOKMARK [3][-]{subsubsection.3.2.7}{Modul string\137helper.c}{subsection.3.2}% 19
+\BOOKMARK [3][-]{subsubsection.3.2.8}{Modul file\137helper.c}{subsection.3.2}% 20
+\BOOKMARK [3][-]{subsubsection.3.2.9}{Modul lcs.c}{subsection.3.2}% 21
+\BOOKMARK [1][-]{section.4}{U\236ivatelsk\341 pr\355rucka}{}% 22
+\BOOKMARK [2][-]{subsection.4.1}{Podporovan\351 operacn\355 syst\351my}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.2}{Spu\235ten\355 programu}{section.4}% 24
+\BOOKMARK [1][-]{section.5}{Z\341ver}{}% 25
+\BOOKMARK [2][-]{subsection.5.1}{Casy behu programu}{section.5}% 26
+\BOOKMARK [2][-]{subsection.5.2}{Shrnut\355}{section.5}% 27
+\BOOKMARK [2][-]{subsection.5.3}{Zhodnocen\355 pr\341ce}{section.5}% 28

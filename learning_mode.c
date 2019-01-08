@@ -20,14 +20,20 @@ int learning_mode(app_context *context)
     /* Aplikacni kontext je NULL - nelze dale pokracovat */
     if(context == NULL)
     {
-        return -1;
+        return PROGRAM_RETURN_NO_CONTEXT;
+    }
+
+    /* Ukazatel na soubor v kontextu je NULL - nelze dále pokračovat */
+    if(context->input_file == NULL)
+    {
+        return PROGRAM_RETURN_MALFORMED_CONTEXT;
     }
 
     /* Otevreni souboru pro cteni */
     file = fopen(context->input_file ,"r");
     if (file == NULL) {
         /* Chybi opravneni ke cteni souboru nebo se jej nepodarilo otevrit */
-        return -5;
+        return PROGRAM_RETURN_FILE_READ_ERROR;
     }
 
     /* Alokace pameti pro buffer pro nacitani slov ze souboru */
@@ -37,7 +43,7 @@ int learning_mode(app_context *context)
     if(buffer == NULL)
     {
         fclose(file);
-        return -6;
+        return PROGRAM_RETURN_ALLOCATION_ERROR;
     }
 
     /* Alokace pameti pro root prvek Trie */
@@ -49,7 +55,7 @@ int learning_mode(app_context *context)
         /* Alokace nebyla provedena spravne, uvolni veskere pouzite zdroje */
         fclose(file);
         free(buffer);
-        return -6;
+        return PROGRAM_RETURN_ALLOCATION_ERROR;
     }
 
     /* Nacitani ze souboru znak po znaku */

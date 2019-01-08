@@ -1,6 +1,6 @@
 #include "linked_list.h"
 
-/* Vytvori novy node spojoveho seznamu */
+/* Vytvori novy node spojoveho seznamu  */
 list_node *create_list_node(char *string, int count)
 {
     /* Deklarace */

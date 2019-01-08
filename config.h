@@ -11,6 +11,8 @@
 #define PROGRAM_DEFAULT_MSL 3
 /* Standardni hodnota pro -msf v pripade nevyplneni vstupu */
 #define PROGRAM_DEFAULT_MSF 10
+/* Jmeno souboru pro vystup korenu */
+#define PROGRAM_STEMS_DAT_FILENAME "stems.dat"
 /* Pocatecni velikost vyrovaci pameti pro nacitani textu */
 #define READ_BUFFER_SIZE (int)(64*sizeof(char))
 
@@ -28,6 +30,17 @@
 #define PROGRAM_RETURN_NUMBER_CONVERSION_ERROR -3
 /* Nelze urcit cil aplikace - chyba ve zpracovani vstupu */
 #define PROGRAM_RETURN_UNCLEAR_OPERATION -4
+/* Nelze precist soubor */
+#define PROGRAM_RETURN_FILE_READ_ERROR -5
+/* Neuspesna alokace pameti */
+#define PROGRAM_RETURN_ALLOCATION_ERROR -6
+/* Soubor stems.dat neexistuje */
+#define PROGRAM_RETURN_STEMS_DAT_MISSING -7
+/* Kontext aplikace neni NULL, ale data v nem obsazena jsou spatna */
+#define PROGRAM_RETURN_MALFORMED_CONTEXT -8
+
+/* Obecná chyba programu */
+#define PROGRAM_RETURN_GENERIC -1
 
 
 /*

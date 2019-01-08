@@ -1,2 +1,6 @@
 .idea/
 cmake-build-debug/
+dokumentace/*.tmp 
+stems.dat
+test_code.text
+img/

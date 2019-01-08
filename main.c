@@ -1,11 +1,10 @@
 #include "main.h"
 
 
-/* Vstupni bod aplikace */
+/* Vstupni bod aplikace  */
 int main(int argc, char *argv[]) {
     int rtn_code = 0;
     app_context *context;
-    int i = 0;
 
     /* Vytvoreni aplikacniho kontextu */
     context = create_app_context(argc, argv);
