@@ -18,4 +18,4 @@
  */
 int learning_mode(app_context *context);
 
-#endif //KIV_PC_LEARNING_MODE_H
+#endif /* KIV_PC_LEARNING_MODE_H */

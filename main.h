@@ -17,4 +17,4 @@
 #include "processing_mode.h"
 
 
-#endif //KIV_PC_MAIN_H
+#endif /* KIV_PC_MAIN_H */

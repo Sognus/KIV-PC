@@ -16,4 +16,4 @@
  */
 int processing_mode(app_context *context);
 
-#endif //KIV_PC_PROCESSING_MODE_H
+#endif /* KIV_PC_PROCESSING_MODE_H */

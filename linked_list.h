@@ -32,4 +32,4 @@ void free_list(list_node *root);
 
 
 
-#endif //KIV_PC_LINKED_LIST_H
+#endif /* KIV_PC_LINKED_LIST_H */

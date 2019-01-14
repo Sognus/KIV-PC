@@ -57,4 +57,4 @@
 #define APP_CONTEXT_INT_BASE 10
 
 
-#endif //KIV_PC_CONFIG_H
+#endif /* KIV_PC_CONFIG_H */

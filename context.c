@@ -40,7 +40,7 @@ int strtol_error_detect(char *nptr, char **endptr, long number)
         if(DEBUG) {
             printf(" number : %lu  invalid  (no digits found, 0 returned)\n", number);
         }
-        //err = 1;
+        /* err = 1; */
     }
     else if (errno == ERANGE && number == LONG_MIN) {
         if(DEBUG) {

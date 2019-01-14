@@ -56,4 +56,4 @@ void free_app_context(app_context *context);
  */
 int file_exists(const char *file_name);
 
-#endif //KIV_PC_CONTEXT_H
+#endif /* KIV_PC_CONTEXT_H */

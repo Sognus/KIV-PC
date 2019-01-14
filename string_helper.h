@@ -15,4 +15,4 @@ long long_max(long a, long b);
 /* Prevede znak z velkeho pismene na male */
 unsigned char cp1250_tolower(unsigned char c);
 
-#endif //KIV_PC_STRING_HELP_H
+#endif /* KIV_PC_STRING_HELP_H */

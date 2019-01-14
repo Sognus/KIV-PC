@@ -16,6 +16,16 @@ int learning_mode(app_context *context)
     int first_char_of_word = 1;
     char *temp = NULL;
     int longest_word = 0;
+    list_node *list_root_node = NULL;
+    int level = 0;
+    char *str = NULL;
+    char *buf = NULL;
+    trie_node *save_root = NULL;
+    int level_dump = 0;
+    char *str_dump = NULL;
+    list_node *iter1 = NULL;
+    list_node *iter2 = NULL;
+    FILE *file_dump = NULL;
 
     /* Aplikacni kontext je NULL - nelze dale pokracovat */
     if(context == NULL)
@@ -125,20 +135,20 @@ int learning_mode(app_context *context)
     /* Ulozeni nalezenych slov do listu pro rychlejsi iteraci */
 
     /* Vytvoreni korenoveho prvku spojoveho seznamu */
-    list_node *list_root_node = create_list_node("", 0);
+    list_root_node = create_list_node("", 0);
     /* Deklarace promennych pro presun klicu do spojoveho seznamu */
-    int level = 0;
-    char *str = malloc(sizeof(char) * longest_word + 1);
+    level = 0;
+    str = malloc(sizeof(char) * longest_word + 1);
     /* Presun dat z trie do spojoveho seznamu */
     trie_to_list(list_root_node, root, str, level);
     free(str);
 
     /* Deklarace nove trie */
-    trie_node *save_root = create_trie_node();
+    save_root = create_trie_node();
     /* Deklarace iteracnich promennych */
-    list_node *iter1 = list_root_node;
-    list_node *iter2 = NULL;
-    char *buf = NULL;
+    iter1 = list_root_node;
+    iter2 = NULL;
+    buf = NULL;
 
     /* Iterace nalezenymi slovy - vytvoreni trie pro koreny */
     while(iter1)
@@ -163,9 +173,9 @@ int learning_mode(app_context *context)
     free_list(list_root_node);
 
     /* Dump trie do stems.dat */
-    int level_dump = 0;
-    char *str_dump = malloc(sizeof(char) * longest_word + 1);
-    FILE *file_dump = fopen("stems.dat", "w");
+    level_dump = 0;
+    str_dump = malloc(sizeof(char) * longest_word + 1);
+    file_dump = fopen("stems.dat", "w");
     trie_to_file(file_dump, save_root, str_dump, level_dump);
     free(str_dump);
     fclose(file_dump);

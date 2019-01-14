@@ -262,10 +262,10 @@ void trie_find_longest_stem(trie_node *node, char *word, char *buffer, int level
     /* Pokud je node koncovym znakem, vypis retezec a pocet jeho vyskytu */
     if (trie_is_leaf_node(node))
     {
+        char *result = NULL;
         buffer[level] = '\0';
 
         /* Ulozeni LCS z puvodnich retezcu do trie */
-        char *result = NULL;
         longest_common_substring(buffer, word, &result);
 
         if(result != NULL)

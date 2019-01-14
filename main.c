@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     /* Otestovani validity vytvoreni struktury app_context */
     if(context == NULL)
     {
-        // Pamet neni alokovana, tudiz nemusi byt uvolnovana
+        /* Pamet neni alokovana, tudiz nemusi byt uvolnovana */
         return PROGRAM_RETURN_NO_CONTEXT;
     }
 

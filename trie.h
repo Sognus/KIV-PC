@@ -56,4 +56,4 @@ void trie_to_file(FILE *file,trie_node *root, char *str, int level);
 /* V dane strukture Trie najde nejdelsi koren a ulozi jej do promenne output */
 void trie_find_longest_stem(trie_node *node, char *word, char *buffer, int level, char *output);
 
-#endif //KIV_PC_TRIE_H
+#endif /* KIV_PC_TRIE_H */

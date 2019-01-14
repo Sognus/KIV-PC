@@ -32,4 +32,4 @@ int string_read_words_to_list(char *string, list_node *node);
 int file_read_database_to_trie(char *file_name, trie_node *root, long msf);
 
 
-#endif //KIV_PC_FILE_HELPER_H
+#endif /* KIV_PC_FILE_HELPER_H */
